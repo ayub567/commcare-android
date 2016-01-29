@@ -1,6 +1,7 @@
 package org.commcare.android.tasks;
 
 import android.content.Context;
+import android.util.Log;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -16,6 +17,7 @@ import org.commcare.android.net.HttpRequestGenerator;
 import org.commcare.android.tasks.templates.HttpCalloutTask;
 import org.commcare.android.util.SessionUnavailableException;
 import org.commcare.dalvik.activities.DataPullController;
+import org.commcare.dalvik.activities.LoginActivity;
 import org.commcare.dalvik.activities.LoginMode;
 import org.commcare.dalvik.application.CommCareApp;
 import org.commcare.dalvik.application.CommCareApplication;
@@ -132,12 +134,14 @@ public abstract class ManageKeyRecordTask<R extends DataPullController> extends 
     }
 
     protected void keysReadyForSync(R receiver) {
+        Log.i(LoginActivity.LOGIN_DEBUG_TAG, "keysReadyForSync() called");
         // TODO: we only wanna do this on the _first_ try. Not
         // subsequent ones (IE: On return from startDataPull)
         receiver.startDataPull();
     }
 
     protected void keysLoginComplete(R receiver) {
+        Log.i(LoginActivity.LOGIN_DEBUG_TAG, "keysLoginComplete() called");
         if (triggerMultipleUserWarning) {
             Logger.log(AndroidLogger.SOFT_ASSERT,
                     "Warning a user upon login that they already have another " +
@@ -153,6 +157,8 @@ public abstract class ManageKeyRecordTask<R extends DataPullController> extends 
     }
 
     protected void keysDoneOther(R receiver, HttpCalloutOutcomes outcome) {
+        Log.i(LoginActivity.LOGIN_DEBUG_TAG, "keysDoneOther() called");
+
         switch (outcome) {
             case AuthFailed:
                 Logger.log(AndroidLogger.TYPE_USER, "auth failed");

@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.util.Log;
 
 import org.commcare.android.tasks.templates.CommCareTask;
+import org.commcare.dalvik.activities.LoginActivity;
 
 /**
  * Hold a reference to current task to report its progress and results The
@@ -32,6 +33,7 @@ public class TaskConnectorFragment<R> extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        Log.i(LoginActivity.LOGIN_DEBUG_TAG, "TaskConnectorFragment.onAttach() called");
 
         if (context instanceof CommCareActivity) {
             if (isCurrentTaskRunning()) {
@@ -53,6 +55,7 @@ public class TaskConnectorFragment<R> extends Fragment {
     public void onDetach() {
         super.onDetach();
 
+        Log.i(LoginActivity.LOGIN_DEBUG_TAG, "onDetach() called in TaskConnectorFragment");
         if (currentTask != null) {
             Log.i("CommCareUI", "Detaching activity from current task: " + this.currentTask);
             currentTask.disconnect();

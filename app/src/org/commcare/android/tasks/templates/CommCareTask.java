@@ -3,6 +3,7 @@ package org.commcare.android.tasks.templates;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import org.commcare.dalvik.activities.LoginActivity;
 import org.javarosa.core.services.Logger;
 
 /**
@@ -188,6 +189,7 @@ public abstract class CommCareTask<Params, Progress, Result, Receiver> extends M
      * current task.
      */
     public void disconnect() {
+        Log.i(LoginActivity.LOGIN_DEBUG_TAG, "CommCareTask.disconnect() was called");
         synchronized (connectorLock) {
             connector = null;
         }

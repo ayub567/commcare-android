@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.text.Spannable;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.Pair;
 import android.util.TypedValue;
 import android.view.GestureDetector;
@@ -33,6 +34,7 @@ import org.commcare.android.util.AndroidUtil;
 import org.commcare.android.util.MarkupUtil;
 import org.commcare.android.util.SessionStateUninitException;
 import org.commcare.android.util.StringUtils;
+import org.commcare.dalvik.activities.LoginActivity;
 import org.commcare.dalvik.application.CommCareApplication;
 import org.commcare.dalvik.dialogs.AlertDialogFactory;
 import org.commcare.dalvik.dialogs.AlertDialogFragment;
@@ -273,6 +275,7 @@ public abstract class CommCareActivity<R> extends FragmentActivity
     @Override
     protected void onResumeFragments() {
         super.onResumeFragments();
+        Log.i(LoginActivity.LOGIN_DEBUG_TAG, "CommCareActivity.onResumeFragments() called");
 
         areFragmentsPaused = false;
 

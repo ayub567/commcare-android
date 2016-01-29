@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.widget.Toast;
 
 import org.commcare.android.database.global.models.ApplicationRecord;
@@ -259,7 +260,7 @@ public class DispatchActivity extends FragmentActivity {
 
     private void handleShortcutLaunch() {
         if (!triggerLoginIfNeeded()) {
-            //We were launched in shortcut mode. Get the command and load us up.
+            // We were launched in shortcut mode. Get the command and load us up.
             CommCareApplication._().getCurrentSession().setCommand(
                     this.getIntent().getStringExtra(AndroidShortcuts.EXTRA_KEY_SHORTCUT));
 

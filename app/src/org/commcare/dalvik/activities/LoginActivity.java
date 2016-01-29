@@ -56,6 +56,7 @@ public class LoginActivity extends CommCareActivity<LoginActivity>
         RuntimePermissionRequester, WithUIController {
 
     private static final String TAG = LoginActivity.class.getSimpleName();
+    public static final String LOGIN_DEBUG_TAG = "LOGIN DEBUGGING";
 
     private static final int MENU_DEMO = Menu.FIRST;
     private static final int MENU_ABOUT = Menu.FIRST + 1;
@@ -248,6 +249,7 @@ public class LoginActivity extends CommCareActivity<LoginActivity>
                     }
                 };
 
+        Log.i(LOGIN_DEBUG_TAG, "starting DataPullTask in " + this);
         dataPuller.connect(this);
         dataPuller.execute();
     }
@@ -255,11 +257,12 @@ public class LoginActivity extends CommCareActivity<LoginActivity>
     @Override
     protected void onResume() {
         super.onResume();
+        Log.i(LOGIN_DEBUG_TAG, "LoginActivity.onResume() called in " + this);
 
         // It is possible that we left off at the LoginActivity last time we were on the main CC
         // screen, but have since done something in the app manager to either leave no seated app
-        // at all, or to render the seated app unusable. Redirect to CCHomeActivity if we encounter
-        // either case
+        // at all, or to render the seated app unusable. Redirect to DispatchActivity if we
+        // encounter either case
         CommCareApp currentApp = CommCareApplication._().getCurrentApp();
         if (currentApp == null || !currentApp.getAppRecord().isUsable()) {
             // send back to dispatch activity
@@ -270,6 +273,13 @@ public class LoginActivity extends CommCareActivity<LoginActivity>
 
         // Otherwise, refresh the activity for current conditions
         uiController.refreshView();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        Log.i(LOGIN_DEBUG_TAG, "LoginActivity.onPause() called in " + this);
     }
 
     @Override
@@ -325,6 +335,7 @@ public class LoginActivity extends CommCareActivity<LoginActivity>
 
                     };
 
+            Log.i(LOGIN_DEBUG_TAG, "starting ManageKeyRecordTask in " + this);
             task.connect(this);
             task.execute();
 
@@ -347,6 +358,7 @@ public class LoginActivity extends CommCareActivity<LoginActivity>
 
     @Override
     public void dataPullCompleted() {
+        Log.i(LOGIN_DEBUG_TAG, "dataPullCompleted() was called in " + this);
         ACRAUtil.registerUserData();
         CommCareApplication._().clearNotifications(NOTIFICATION_MESSAGE_LOGIN);
 
