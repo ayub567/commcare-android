@@ -135,6 +135,7 @@ public class DispatchActivity extends FragmentActivity {
                     }
                 } else if (!CommCareApplication._().getSession().isActive()) {
                     // The user is not logged in
+                    Log.i(LoginActivity.LOGIN_DEBUG_TAG, "launchLoginScreen() 1");
                     launchLoginScreen();
                 } else if (this.getIntent().hasExtra(SESSION_REQUEST)) {
                     // CommCare was launched from an external app, with a session descriptor
@@ -147,6 +148,7 @@ public class DispatchActivity extends FragmentActivity {
                     launchHomeScreen();
                 }
             } catch (SessionUnavailableException sue) {
+                Log.i(LoginActivity.LOGIN_DEBUG_TAG, "launchLoginScreen() 2");
                 launchLoginScreen();
             }
         }
@@ -181,6 +183,7 @@ public class DispatchActivity extends FragmentActivity {
                 showDialog(DIALOG_CORRUPTED);
             } catch (SessionUnavailableException e) {
                 // Otherwise, log in first
+                Log.i(LoginActivity.LOGIN_DEBUG_TAG, "launchLoginScreen() 3");
                 launchLoginScreen();
             }
         }
@@ -275,10 +278,12 @@ public class DispatchActivity extends FragmentActivity {
     private boolean triggerLoginIfNeeded() {
         try {
             if (!CommCareApplication._().getSession().isActive()) {
+                Log.i(LoginActivity.LOGIN_DEBUG_TAG, "launchLoginScreen() 4");
                 launchLoginScreen();
                 return true;
             }
         } catch (SessionUnavailableException e) {
+            Log.i(LoginActivity.LOGIN_DEBUG_TAG, "launchLoginScreen() 5");
             launchLoginScreen();
             return true;
         }
