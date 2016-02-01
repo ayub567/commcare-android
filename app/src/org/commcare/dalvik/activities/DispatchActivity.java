@@ -49,11 +49,14 @@ public class DispatchActivity extends FragmentActivity {
     private boolean userTriggeredLogout;
     private boolean shortcutExtraWasConsumed;
 
+    private boolean activityResultPending;
+
     private static final String EXTRA_CONSUMED_KEY = "shortcut_extra_was_consumed";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.i(LoginActivity.LOGIN_DEBUG_TAG, "onCreate() called in DispatchActivity " + this + " with task ID " + this.getTaskId());
 
         if (finishIfNotRoot()) {
             return;
@@ -87,12 +90,19 @@ public class DispatchActivity extends FragmentActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        Log.i(LoginActivity.LOGIN_DEBUG_TAG, "onResume() called in DispatchActivity " + this + " with intent " + System.identityHashCode(this.getIntent()));
 
         if (shouldFinish) {
             finish();
         } else {
             dispatch();
         }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.i(LoginActivity.LOGIN_DEBUG_TAG, "onPause() called in DispatchActivity " + this + " with task ID " + this.getTaskId());
     }
 
     @Override
@@ -149,7 +159,9 @@ public class DispatchActivity extends FragmentActivity {
                 }
             } catch (SessionUnavailableException sue) {
                 Log.i(LoginActivity.LOGIN_DEBUG_TAG, "launchLoginScreen() 2");
-                launchLoginScreen();
+                if (!activityResultPending) {
+                    launchLoginScreen();
+                }
             }
         }
     }
@@ -197,8 +209,10 @@ public class DispatchActivity extends FragmentActivity {
 
     private void launchLoginScreen() {
         Intent i = new Intent(this, LoginActivity.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         i.putExtra(LoginActivity.USER_TRIGGERED_LOGOUT, userTriggeredLogout);
         startActivityForResult(i, LOGIN_USER);
+        activityResultPending = true;
     }
 
     private void launchHomeScreen() {
@@ -292,6 +306,7 @@ public class DispatchActivity extends FragmentActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        activityResultPending = false;
         // if handling new return code (want to return to home screen) but a return at the end of your statement
         switch (requestCode) {
             case INIT_APP:
