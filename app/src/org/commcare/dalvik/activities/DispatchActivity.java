@@ -159,9 +159,7 @@ public class DispatchActivity extends FragmentActivity {
                 }
             } catch (SessionUnavailableException sue) {
                 Log.i(LoginActivity.LOGIN_DEBUG_TAG, "launchLoginScreen() 2");
-                if (!activityResultPending) {
-                    launchLoginScreen();
-                }
+                launchLoginScreen();
             }
         }
     }
