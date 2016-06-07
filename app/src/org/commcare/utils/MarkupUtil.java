@@ -54,8 +54,11 @@ public class MarkupUtil {
     }
 
     private static CharSequence generateMarkdown(Context c, String message) {
+        /*
         Bypass bypass = new Bypass(c);
         return trimTrailingWhitespace(bypass.markdownToSpannable(convertCharacterEncodings(message)));
+        */
+        return message;
     }
 
     /**
