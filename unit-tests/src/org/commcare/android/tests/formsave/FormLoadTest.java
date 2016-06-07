@@ -42,7 +42,7 @@ public class FormLoadTest {
     @Before
     public void setup() {
         TestAppInstaller.installAppAndLogin(
-                "jr://resource/commcare-apps/receprofile.ccpr",
+                "jr://resource/commcare-apps/rec/profile.ccpr",
                 "test", "123");
 
         TestUtils.processResourceTransactionIntoAppDb("/commcare-apps/rec/rectest_restore.xml");
@@ -79,7 +79,9 @@ public class FormLoadTest {
     private static void writeInstanceToFile(FormInstance instance) throws IOException {
         XFormSerializingVisitor serializer = new XFormSerializingVisitor(false);
         ByteArrayPayload payload = (ByteArrayPayload)serializer.createSerializedPayload(instance);
-        FileOutputStream output = new FileOutputStream("out.xml");
+        File f = new File("out.xml");
+        System.out.print(f.getAbsolutePath());
+        FileOutputStream output = new FileOutputStream(f);
 
         try {
             InputStream is = payload.getPayloadStream();
