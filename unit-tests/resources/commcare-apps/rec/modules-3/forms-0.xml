@@ -1,0 +1,539 @@
+<h:html xmlns:h="http://www.w3.org/1999/xhtml" xmlns:orx="http://openrosa.org/jr/xforms" xmlns="http://www.w3.org/2002/xforms" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jr="http://openrosa.org/javarosa" xmlns:vellum="http://commcarehq.org/xforms/vellum">
+	<h:head>
+		<h:title>Meds Selection</h:title>
+		<model>
+			<instance>
+				<data xmlns:jrm="http://dev.commcarehq.org/jr/xforms" xmlns="http://openrosa.org/formdesigner/6E577CFA-7666-4910-A29B-A5676D8D7ECF" uiVersion="1" version="4" name="Meds Selection">
+					<weight_loaded/>
+					<vitamin_a_loaded/>
+					<visit_type_loaded/>
+					<meds_selection/>
+					<debug/>
+					<Debug_label/>
+					<possible_meds>
+						<look_for_treatment_of_same_class ids="" count="" current_index="">
+							<item id="" index="" jr:template="">
+								<all_meds/>
+								<debug_all_meds/>
+								<perfusion_p1_a_id/>
+								<perfusion_p1_b_id/>
+								<perfusion_p2_a_id/>
+								<perfusion_p2_b_id/>
+								<deparasitage_id/>
+								<deparasitage_id_option/>
+								<artemether_id/>
+								<artemether_id_option/>
+								<vitamine_a_id/>
+								<vitamine_a_id_option/>
+								<antibio_id/>
+								<antibio_id_option/>
+								<meds_that_dont_need_reconciliation/>
+							</item>
+						</look_for_treatment_of_same_class>
+					</possible_meds>
+					<select_meds>
+						<all_perfusion_p1_a/>
+						<show_perfusion_p1_a/>
+						<perfusion_p1_a/>
+						<all_perfusion_p1_b/>
+						<show_perfusion_p1_b/>
+						<perfusion_p1_b/>
+						<all_perfusion_p2_a/>
+						<show_perfusion_p2_a/>
+						<perfusion_p2_a/>
+						<all_perfusion_p2_b/>
+						<show_perfusion_p2_b/>
+						<perfusion_p2_b/>
+						<all_deparasitage/>
+						<show_deparasitage/>
+						<deparasitage/>
+						<all_deparasitage_option/>
+						<show_deparasitage_option/>
+						<deparasitage_option/>
+						<all_artemether/>
+						<show_artemether/>
+						<artemether/>
+						<all_artemether_option/>
+						<show_artemether_option/>
+						<artemether_option/>
+						<all_vitamine_a/>
+						<show_vitamine_a/>
+						<vitamine_a/>
+						<all_vitamine_a_option/>
+						<show_vitamine_a_option/>
+						<vitamine_a_option/>
+						<all_antibio/>
+						<show_antibio/>
+						<antibio/>
+						<all_antibio_option/>
+						<show_antibio_option/>
+						<antibio_option/>
+						<all_classless_meds/>
+						<show_classless/>
+						<list_of_meds_not_needing_selection/>
+						<question2/>
+						<all_chosen_med_ids/>
+						<show_all_meds/>
+					</select_meds>
+					<child_dosage_calculation>
+						<iterate_over_diagnoses_child ids="" count="" current_index="">
+							<item id="" index="" jr:template="">
+								<prescribed_medication/>
+								<raw_dosage/>
+								<need_to_multiply_by_weight/>
+								<prescribed_dosage/>
+								<transfer xmlns="http://commcarehq.org/ledger/v1" date="" src="" type="write_prescribed_meds_to_ledger_child" section-id="prescribed_meds">
+									<entry id="" quantity=""/>
+								</transfer>
+							</item>
+						</iterate_over_diagnoses_child>
+					</child_dosage_calculation>
+					<label_prescription_ready/>
+					<meds>
+						<all_antibios_choosen/>
+						<count_antibio/>
+						<count_all/>
+					</meds>
+				<case_case_child><case xmlns="http://commcarehq.org/case/transaction/v2" case_id="" date_modified="" user_id=""><update><meds_selection/></update></case></case_case_child><case_case_visit><case xmlns="http://commcarehq.org/case/transaction/v2" case_id="" date_modified="" user_id=""><update><meds_selection/></update></case></case_case_visit><orx:meta xmlns:cc="http://commcarehq.org/xforms"><orx:deviceID/><orx:timeStart/><orx:timeEnd/><orx:username/><orx:userID/><orx:instanceID/><cc:appVersion/></orx:meta></data>
+			</instance><instance id="casedb" src="jr://instance/casedb"/>
+			<instance src="jr://instance/ledgerdb" id="ledger"/>
+			<instance src="jr://instance/session" id="commcaresession"/>
+			<instance src="jr://fixture/commtrack:products" id="products"/>
+			<bind nodeset="/data/weight_loaded"/>
+			<bind nodeset="/data/vitamin_a_loaded"/>
+			<bind nodeset="/data/visit_type_loaded"/>
+			<bind nodeset="/data/meds_selection" calculate="'completed'"/>
+			<bind nodeset="/data/debug" calculate="false()"/>
+			<bind nodeset="/data/Debug_label" relevant="/data/debug"/>
+			<bind nodeset="/data/possible_meds"/>
+			<bind nodeset="/data/possible_meds/look_for_treatment_of_same_class/@current_index" calculate="count(/data/possible_meds/look_for_treatment_of_same_class/item)"/>
+			<bind nodeset="/data/possible_meds/look_for_treatment_of_same_class/item"/>
+			<bind nodeset="/data/possible_meds/look_for_treatment_of_same_class/item/all_meds" calculate="current()/../@id"/>
+			<bind nodeset="/data/possible_meds/look_for_treatment_of_same_class/item/debug_all_meds" relevant="/data/debug"/>
+			<bind nodeset="/data/possible_meds/look_for_treatment_of_same_class/item/perfusion_p1_a_id" relevant="instance('products')/products/product[@id=current()/../@id]/product_data/class = 'perfusion_p1_a'" calculate="current()/../@id"/>
+			<bind nodeset="/data/possible_meds/look_for_treatment_of_same_class/item/perfusion_p1_b_id" relevant="instance('products')/products/product[@id=current()/../@id]/product_data/class = 'perfusion_p1_b'" calculate="current()/../@id"/>
+			<bind nodeset="/data/possible_meds/look_for_treatment_of_same_class/item/perfusion_p2_a_id" relevant="instance('products')/products/product[@id=current()/../@id]/product_data/class = 'perfusion_p2_a'" calculate="current()/../@id"/>
+			<bind nodeset="/data/possible_meds/look_for_treatment_of_same_class/item/perfusion_p2_b_id" relevant="instance('products')/products/product[@id=current()/../@id]/product_data/class = 'perfusion_p2_b'" calculate="current()/../@id"/>
+			<bind nodeset="/data/possible_meds/look_for_treatment_of_same_class/item/deparasitage_id" relevant="instance('products')/products/product[@id=current()/../@id]/product_data/class = 'deparasitage' and instance('products')/products/product[@id = current()/../@id]/product_data/optional = 'm'" calculate="current()/../@id"/>
+			<bind nodeset="/data/possible_meds/look_for_treatment_of_same_class/item/deparasitage_id_option" relevant="instance('products')/products/product[@id=current()/../@id]/product_data/class = 'deparasitage' and instance('products')/products/product[@id = current()/../@id]/product_data/optional = 'o'" calculate="current()/../@id"/>
+			<bind nodeset="/data/possible_meds/look_for_treatment_of_same_class/item/artemether_id" relevant="instance('products')/products/product[@id=current()/../@id]/product_data/class = 'artemether' and instance('products')/products/product[@id = current()/../@id]/product_data/optional = 'm'" calculate="current()/../@id"/>
+			<bind nodeset="/data/possible_meds/look_for_treatment_of_same_class/item/artemether_id_option" relevant="instance('products')/products/product[@id=current()/../@id]/product_data/class = 'artemether' and instance('products')/products/product[@id = current()/../@id]/product_data/optional = 'o'" calculate="current()/../@id"/>
+			<bind nodeset="/data/possible_meds/look_for_treatment_of_same_class/item/vitamine_a_id" relevant="instance('products')/products/product[@id=current()/../@id]/product_data/class = 'vitamine_a' and instance('products')/products/product[@id = current()/../@id]/product_data/optional = 'm'" calculate="current()/../@id"/>
+			<bind nodeset="/data/possible_meds/look_for_treatment_of_same_class/item/vitamine_a_id_option" relevant="instance('products')/products/product[@id=current()/../@id]/product_data/class = 'vitamine_a' and instance('products')/products/product[@id = current()/../@id]/product_data/optional = 'o'" calculate="current()/../@id"/>
+			<bind nodeset="/data/possible_meds/look_for_treatment_of_same_class/item/antibio_id" relevant="instance('products')/products/product[@id=current()/../@id]/product_data/class = 'antibio' and instance('products')/products/product[@id = current()/../@id]/product_data/optional = 'm'" calculate="current()/../@id"/>
+			<bind nodeset="/data/possible_meds/look_for_treatment_of_same_class/item/antibio_id_option" relevant="instance('products')/products/product[@id = current()/../@id]/product_data/class = 'antibio' and instance('products')/products/product[@id = current()/../@id]/product_data/optional = 'o'" calculate="current()/../@id"/>
+			<bind nodeset="/data/possible_meds/look_for_treatment_of_same_class/item/meds_that_dont_need_reconciliation" relevant="instance('products')/products/product[@id = current()/../@id]/product_data/class = ''" calculate="current()/../@id"/>
+			<bind nodeset="/data/select_meds"/>
+			<bind nodeset="/data/select_meds/all_perfusion_p1_a" calculate="join(' ', /data/possible_meds/look_for_treatment_of_same_class/item/perfusion_p1_a_id)"/>
+			<bind nodeset="/data/select_meds/show_perfusion_p1_a" relevant="/data/debug"/>
+			<bind nodeset="/data/select_meds/perfusion_p1_a" relevant="count(instance('products')/products/product[selected(/data/select_meds/all_perfusion_p1_a, @id)]) &gt; 1" required="true()"/>
+			<bind nodeset="/data/select_meds/all_perfusion_p1_b" calculate="join(' ', /data/possible_meds/look_for_treatment_of_same_class/item/perfusion_p1_b_id)"/>
+			<bind nodeset="/data/select_meds/show_perfusion_p1_b" relevant="/data/debug"/>
+			<bind nodeset="/data/select_meds/perfusion_p1_b" relevant="count(instance('products')/products/product[selected(/data/select_meds/all_perfusion_p1_b, @id)]) &gt; 1" required="true()"/>
+			<bind nodeset="/data/select_meds/all_perfusion_p2_a" calculate="join(' ', /data/possible_meds/look_for_treatment_of_same_class/item/perfusion_p2_a_id)"/>
+			<bind nodeset="/data/select_meds/show_perfusion_p2_a" relevant="/data/debug"/>
+			<bind nodeset="/data/select_meds/perfusion_p2_a" relevant="count(instance('products')/products/product[selected(/data/select_meds/all_perfusion_p2_a, @id)]) &gt; 1" required="true()"/>
+			<bind nodeset="/data/select_meds/all_perfusion_p2_b" calculate="join(' ', /data/possible_meds/look_for_treatment_of_same_class/item/perfusion_p2_b_id)"/>
+			<bind nodeset="/data/select_meds/show_perfusion_p2_b" relevant="/data/debug"/>
+			<bind nodeset="/data/select_meds/perfusion_p2_b" relevant="count(instance('products')/products/product[selected(/data/select_meds/all_perfusion_p2_b, @id)]) &gt; 1" required="true()"/>
+			<bind nodeset="/data/select_meds/all_deparasitage" calculate="join(' ', /data/possible_meds/look_for_treatment_of_same_class/item/deparasitage_id)"/>
+			<bind nodeset="/data/select_meds/show_deparasitage" relevant="/data/debug"/>
+			<bind nodeset="/data/select_meds/deparasitage" relevant="count(instance('products')/products/product[selected(/data/select_meds/all_deparasitage, @id)]) &gt; 1" required="true()"/>
+			<bind nodeset="/data/select_meds/all_deparasitage_option" calculate="join(' ', /data/possible_meds/look_for_treatment_of_same_class/item/deparasitage_id_option)"/>
+			<bind nodeset="/data/select_meds/show_deparasitage_option" relevant="/data/debug"/>
+			<bind nodeset="/data/select_meds/deparasitage_option" relevant="count(instance('products')/products/product[selected(/data/select_meds/all_deparasitage_option, @id)]) &gt; 1 and count(instance('products')/products/product[selected(/data/select_meds/all_deparasitage, @id)]) = 0"/>
+			<bind nodeset="/data/select_meds/all_artemether" calculate="join(' ', /data/possible_meds/look_for_treatment_of_same_class/item/artemether_id)"/>
+			<bind nodeset="/data/select_meds/show_artemether" relevant="/data/debug"/>
+			<bind nodeset="/data/select_meds/artemether" relevant="count(instance('products')/products/product[selected(/data/select_meds/all_artemether, @id)]) &gt; 1" required="true()"/>
+			<bind nodeset="/data/select_meds/all_artemether_option" calculate="join(' ', /data/possible_meds/look_for_treatment_of_same_class/item/artemether_id_option)"/>
+			<bind nodeset="/data/select_meds/show_artemether_option" relevant="/data/debug"/>
+			<bind nodeset="/data/select_meds/artemether_option" relevant="count(instance('products')/products/product[selected(/data/select_meds/all_artemether_option, @id)]) &gt; 1 and count(instance('products')/products/product[selected(/data/select_meds/all_artemether, @id)]) = 0" required="false()"/>
+			<bind nodeset="/data/select_meds/all_vitamine_a" relevant="/data/vitamin_a_loaded != 'yes'" calculate="join(' ', /data/possible_meds/look_for_treatment_of_same_class/item/vitamine_a_id)"/>
+			<bind nodeset="/data/select_meds/show_vitamine_a" relevant="/data/debug"/>
+			<bind nodeset="/data/select_meds/vitamine_a" relevant="count(instance('products')/products/product[selected(/data/select_meds/all_vitamine_a, @id)]) &gt; 1 and /data/vitamin_a_loaded != 'yes'" required="true()"/>
+			<bind nodeset="/data/select_meds/all_vitamine_a_option" calculate="join(' ', /data/possible_meds/look_for_treatment_of_same_class/item/vitamine_a_id_option)"/>
+			<bind nodeset="/data/select_meds/show_vitamine_a_option" relevant="/data/debug"/>
+			<bind nodeset="/data/select_meds/vitamine_a_option" relevant="count(instance('products')/products/product[selected(/data/select_meds/all_vitamine_a, @id)]) = 0 and count(instance('products')/products/product[selected(/data/select_meds/all_vitamine_a_option, @id)]) &gt; 1 and /data/vitamin_a_loaded != 'yes'" required="false()"/>
+			<bind nodeset="/data/select_meds/all_antibio" calculate="join(' ', /data/possible_meds/look_for_treatment_of_same_class/item/antibio_id)"/>
+			<bind nodeset="/data/select_meds/show_antibio" relevant="/data/debug"/>
+			<bind nodeset="/data/select_meds/antibio" relevant="count(instance('products')/products/product[selected(/data/select_meds/all_antibio, @id)]) &gt; 1" required="true()"/>
+			<bind nodeset="/data/select_meds/all_antibio_option" calculate="join(' ', /data/possible_meds/look_for_treatment_of_same_class/item/antibio_id_option)"/>
+			<bind nodeset="/data/select_meds/show_antibio_option" relevant="/data/debug"/>
+			<bind nodeset="/data/select_meds/antibio_option" relevant="count(instance('products')/products/product[selected(/data/select_meds/all_antibio_option, @id)]) &gt; 1 and count(instance('products')/products/product[selected(/data/select_meds/all_antibio, @id)]) = 0" required="false()"/>
+			<bind nodeset="/data/select_meds/all_classless_meds" calculate="join(' ', /data/possible_meds/look_for_treatment_of_same_class/item/meds_that_dont_need_reconciliation)"/>
+			<bind nodeset="/data/select_meds/show_classless" relevant="/data/debug"/>
+			<bind nodeset="/data/select_meds/list_of_meds_not_needing_selection" calculate="join(' ', if(count(instance('products')/products/product[selected(/data/select_meds/all_perfusion_p1_a, @id)]) &gt; 1, '', /data/select_meds/all_perfusion_p1_a), if(count(instance('products')/products/product[selected(/data/select_meds/all_perfusion_p1_b, @id)]) &gt; 1, '', /data/select_meds/all_perfusion_p1_b), if(count(instance('products')/products/product[selected(/data/select_meds/all_perfusion_p2_a, @id)]) &gt; 1, '', /data/select_meds/all_perfusion_p2_a), if(count(instance('products')/products/product[selected(/data/select_meds/all_perfusion_p2_b, @id)]) &gt; 1, '', /data/select_meds/all_perfusion_p2_b), ' ', if(count(instance('products')/products/product[selected(/data/select_meds/all_deparasitage, @id)]) &gt; 1, '', /data/select_meds/all_deparasitage), if(count(instance('products')/products/product[selected(/data/select_meds/all_artemether, @id)]) &gt; 1, '', /data/select_meds/all_artemether), if(count(instance('products')/products/product[selected(/data/select_meds/all_vitamine_a, @id)]) &gt; 1, '', /data/select_meds/all_vitamine_a), if(count(instance('products')/products/product[selected(/data/select_meds/all_antibio, @id)]) &gt; 1, '', /data/select_meds/all_antibio), ' ', /data/select_meds/all_classless_meds)"/>
+			<bind nodeset="/data/select_meds/question2" relevant="/data/debug"/>
+			<bind nodeset="/data/select_meds/all_chosen_med_ids" calculate="concat(/data/select_meds/list_of_meds_not_needing_selection, ' ', /data/select_meds/antibio, ' ', /data/select_meds/antibio_option, ' ', /data/select_meds/vitamine_a, ' ', /data/select_meds/vitamine_a_option, ' ', /data/select_meds/artemether, ' ', /data/select_meds/artemether_option, ' ', /data/select_meds/deparasitage, ' ', /data/select_meds/deparasitage_option, ' ', /data/select_meds/perfusion_p2_b, ' ', /data/select_meds/perfusion_p2_a, ' ', /data/select_meds/perfusion_p1_b, ' ', /data/select_meds/perfusion_p1_a)"/>
+			<bind nodeset="/data/select_meds/show_all_meds" relevant="/data/debug"/>
+			<bind nodeset="/data/child_dosage_calculation"/>
+			<bind nodeset="/data/child_dosage_calculation/iterate_over_diagnoses_child/@current_index" calculate="count(/data/child_dosage_calculation/iterate_over_diagnoses_child/item)"/>
+			<bind nodeset="/data/child_dosage_calculation/iterate_over_diagnoses_child/item"/>
+			<bind nodeset="/data/child_dosage_calculation/iterate_over_diagnoses_child/item/prescribed_medication" calculate="instance('products')/products/product[@id=current()/../@id]/product_data/med_name"/>
+			<bind nodeset="/data/child_dosage_calculation/iterate_over_diagnoses_child/item/raw_dosage" calculate="instance('products')/products/product[@id=current()/../@id]/cost"/>
+			<bind nodeset="/data/child_dosage_calculation/iterate_over_diagnoses_child/item/need_to_multiply_by_weight" calculate="if(instance('products')/products/product[@id=current()/../@id]/product_data/dose_style= 'per_kg', 'yes', 'no')"/>
+			<bind nodeset="/data/child_dosage_calculation/iterate_over_diagnoses_child/item/prescribed_dosage" calculate="if(/data/child_dosage_calculation/iterate_over_diagnoses_child/item/need_to_multiply_by_weight = 'yes', /data/weight_loaded * /data/child_dosage_calculation/iterate_over_diagnoses_child/item/raw_dosage * -1, /data/child_dosage_calculation/iterate_over_diagnoses_child/item/raw_dosage * -1)"/>
+			<bind nodeset="/data/child_dosage_calculation/iterate_over_diagnoses_child/item/transfer[@type='write_prescribed_meds_to_ledger_child']" relevant="selected(/data/select_meds/all_chosen_med_ids, instance('products')/products/product[@id=current()/../@id]/@id)"/>
+			<bind nodeset="/data/child_dosage_calculation/iterate_over_diagnoses_child/item/transfer[@type='write_prescribed_meds_to_ledger_child']/entry/@quantity" calculate="/data/child_dosage_calculation/iterate_over_diagnoses_child/item/prescribed_dosage"/>
+			<bind nodeset="/data/label_prescription_ready"/>
+			<bind nodeset="/data/meds"/>
+			<bind nodeset="/data/meds/all_antibios_choosen" calculate="concat(join(' ', if(count(instance('products')/products/product[selected(/data/select_meds/all_antibio, @id)]) &gt; 1, '', /data/select_meds/all_antibio)),' ',/data/select_meds/antibio,' ',/data/select_meds/antibio_option)"/>
+			<bind nodeset="/data/meds/count_antibio" calculate="count-selected(/data/meds/all_antibios_choosen)"/>
+			<bind nodeset="/data/meds/count_all" calculate="count-selected(/data/select_meds/all_chosen_med_ids)"/>
+			<setvalue event="xforms-ready" ref="/data/possible_meds/look_for_treatment_of_same_class/@ids" value="join(' ', instance('ledger')/ledgerdb/ledger[@entity-id=instance('commcaresession')/session/data/case_id_case_visit]/section[@section-id='possible_meds']/entry/@id)"/>
+			<setvalue event="xforms-ready" ref="/data/possible_meds/look_for_treatment_of_same_class/@count" value="count-selected(/data/possible_meds/look_for_treatment_of_same_class/@ids)"/>
+			<setvalue event="jr-insert" ref="/data/possible_meds/look_for_treatment_of_same_class/item/@index" value="int(/data/possible_meds/look_for_treatment_of_same_class/@current_index)"/>
+			<setvalue event="jr-insert" ref="/data/possible_meds/look_for_treatment_of_same_class/item/@id" value="selected-at(/data/possible_meds/look_for_treatment_of_same_class/@ids,../@index)"/>
+			<setvalue event="xforms-ready" ref="/data/child_dosage_calculation/iterate_over_diagnoses_child/@ids" value="join(' ', instance('products')/products/product/@id)"/>
+			<setvalue event="xforms-ready" ref="/data/child_dosage_calculation/iterate_over_diagnoses_child/@count" value="count-selected(/data/child_dosage_calculation/iterate_over_diagnoses_child/@ids)"/>
+			<setvalue event="jr-insert" ref="/data/child_dosage_calculation/iterate_over_diagnoses_child/item/@index" value="int(/data/child_dosage_calculation/iterate_over_diagnoses_child/@current_index)"/>
+			<setvalue event="jr-insert" ref="/data/child_dosage_calculation/iterate_over_diagnoses_child/item/@id" value="selected-at(/data/child_dosage_calculation/iterate_over_diagnoses_child/@ids,../@index)"/>
+			<setvalue event="jr-insert" ref="/data/child_dosage_calculation/iterate_over_diagnoses_child/item/transfer[@type='write_prescribed_meds_to_ledger_child']/entry/@id" value="current()/../../../@id"/>
+			<setvalue event="jr-insert" ref="/data/child_dosage_calculation/iterate_over_diagnoses_child/item/transfer[@type='write_prescribed_meds_to_ledger_child']/@src" value="instance('commcaresession')/session/data/case_id_case_visit"/>
+			<setvalue event="jr-insert" ref="/data/child_dosage_calculation/iterate_over_diagnoses_child/item/transfer[@type='write_prescribed_meds_to_ledger_child']/@date" value="/data/meta/timeEnd"/>
+			<itext>
+				<translation lang="en" default="">
+					<text id="Debug_label-label">
+						<value>Visit Type: <output value="/data/visit_type_loaded"/></value>
+					</text>
+					<text id="possible_meds-label">
+						<value>possible_meds</value>
+					</text>
+					<text id="possible_meds/look_for_treatment_of_same_class/item-label">
+						<value>Possible Med/Treatment: <output value="instance('products')/products/product[@id=current()/@id]/product_data/key"/></value>
+					</text>
+					<text id="possible_meds/look_for_treatment_of_same_class/item/debug_all_meds-label">
+						<value>all_meds: <output value="/data/possible_meds/look_for_treatment_of_same_class/item/all_meds"/></value>
+					</text>
+					<text id="select_meds-label">
+						<value>SELECT AMONG THE APPROPRIATE MEDICINES:</value>
+					</text>
+					<text id="select_meds/show_perfusion_p1_a-label">
+						<value>Debug: Perfusion p1 A <output value="/data/select_meds/all_perfusion_p1_a"/></value>
+					</text>
+					<text id="select_meds/perfusion_p1_a-label">
+						<value>Choisissez la solution de perfusion</value>
+					</text>
+					<text id="select_meds/show_perfusion_p1_b-label">
+						<value>Debug: Perfusion p1 B <output value="/data/select_meds/all_perfusion_p1_b"/></value>
+					</text>
+					<text id="select_meds/show_perfusion_p2_a-label">
+						<value>Debug: Perfusion p2 A <output value="/data/select_meds/all_perfusion_p2_a"/></value>
+					</text>
+					<text id="select_meds/show_perfusion_p2_b-label">
+						<value>Debug: Perfusion p2 B <output value="/data/select_meds/all_perfusion_p2_b"/></value>
+					</text>
+					<text id="select_meds/show_deparasitage-label">
+						<value>Debug: Deparasitage <output value="/data/select_meds/all_deparasitage"/></value>
+					</text>
+					<text id="select_meds/deparasitage-label">
+						<value>Choisissez un antiparasitaire</value>
+					</text>
+					<text id="select_meds/show_deparasitage_option-label">
+						<value>Debug: Deparasitage <output value="/data/select_meds/all_deparasitage_option"/></value>
+					</text>
+					<text id="select_meds/show_artemether-label">
+						<value>Debug: Artemether <output value="/data/select_meds/all_artemether"/></value>
+					</text>
+					<text id="select_meds/artemether-label">
+						<value>Choisissez un antipalud&#233;en</value>
+					</text>
+					<text id="select_meds/show_artemether_option-label">
+						<value>Debug: Artemether <output value="/data/select_meds/all_artemether_option"/></value>
+					</text>
+					<text id="select_meds/show_vitamine_a-label">
+						<value>Debug: Vitamine A <output value="/data/select_meds/all_vitamine_a"/></value>
+					</text>
+					<text id="select_meds/vitamine_a-label">
+						<value>Choisissez la forme de Vitamine A</value>
+					</text>
+					<text id="select_meds/show_vitamine_a_option-label">
+						<value>Debug: Vitamine A <output value="/data/select_meds/all_vitamine_a_option"/></value>
+					</text>
+					<text id="select_meds/show_antibio-label">
+						<value>Debug: Antibio IDs: <output value="/data/select_meds/all_antibio"/></value>
+					</text>
+					<text id="select_meds/antibio-label">
+						<value>Choisissez un antibiotique</value>
+					</text>
+					<text id="select_meds/show_antibio_option-label">
+						<value>Debug: Antibio IDs: <output value="/data/select_meds/all_antibio_option"/></value>
+					</text>
+					<text id="select_meds/show_classless-label">
+						<value>Debug: classless Meds: <output value="/data/select_meds/all_classless_meds"/></value>
+					</text>
+					<text id="select_meds/question2-label">
+						<value>Debug: Meds not needing recon: <output value="/data/select_meds/list_of_meds_not_needing_selection"/></value>
+					</text>
+					<text id="select_meds/show_all_meds-label">
+						<value>Debug: All meds: <output value="/data/select_meds/all_chosen_med_ids"/></value>
+					</text>
+					<text id="child_dosage_calculation-label">
+						<value>child_dosage_calculation</value>
+					</text>
+					<text id="child_dosage_calculation/iterate_over_diagnoses_child/item-label">
+						<value>Treatment group: <output value="instance('products')/products/product[@id=current()/@id]/product_data/treatment_plan"/></value>
+					</text>
+					<text id="label_prescription_ready-label">
+						<value># Medications are ready to be prescribed</value>
+						<value form="markdown"># Medications are ready to be prescribed</value>
+					</text>
+					<text id="meds-label">
+						<value>meds</value>
+					</text>
+				</translation>
+				<translation lang="fra">
+					<text id="Debug_label-label">
+						<value>Visit Type: <output value="/data/visit_type_loaded"/></value>
+					</text>
+					<text id="possible_meds-label">
+						<value>possible_meds</value>
+					</text>
+					<text id="possible_meds/look_for_treatment_of_same_class/item-label">
+						<value>Possible Med/Treatment: <output value="instance('products')/products/product[@id=current()/@id]/product_data/key"/></value>
+					</text>
+					<text id="possible_meds/look_for_treatment_of_same_class/item/debug_all_meds-label">
+						<value>all_meds: <output value="/data/possible_meds/look_for_treatment_of_same_class/item/all_meds"/></value>
+					</text>
+					<text id="select_meds-label">
+						<value>S&#233;lectionnez les m&#233;dicaments appropri&#233;s</value>
+					</text>
+					<text id="select_meds/show_perfusion_p1_a-label">
+						<value>Debug: Perfusion p1 A <output value="/data/select_meds/all_perfusion_p1_a"/></value>
+					</text>
+					<text id="select_meds/perfusion_p1_a-label">
+						<value>Choisissez la solution de perfusion</value>
+					</text>
+					<text id="select_meds/show_perfusion_p1_b-label">
+						<value>Debug: Perfusion p1 B <output value="/data/select_meds/all_perfusion_p1_b"/></value>
+					</text>
+					<text id="select_meds/show_perfusion_p2_a-label">
+						<value>Debug: Perfusion p2 A <output value="/data/select_meds/all_perfusion_p2_a"/></value>
+					</text>
+					<text id="select_meds/show_perfusion_p2_b-label">
+						<value>Debug: Perfusion p2 B <output value="/data/select_meds/all_perfusion_p2_b"/></value>
+					</text>
+					<text id="select_meds/show_deparasitage-label">
+						<value>Debug: Deparasitage <output value="/data/select_meds/all_deparasitage"/></value>
+					</text>
+					<text id="select_meds/deparasitage-label">
+						<value>Choisissez un antiparasitaire</value>
+					</text>
+					<text id="select_meds/show_deparasitage_option-label">
+						<value>Debug: Deparasitage <output value="/data/select_meds/all_deparasitage_option"/></value>
+					</text>
+					<text id="select_meds/show_artemether-label">
+						<value>Debug: Artemether <output value="/data/select_meds/all_artemether"/></value>
+					</text>
+					<text id="select_meds/artemether-label">
+						<value>Choisissez un antipalud&#233;en</value>
+					</text>
+					<text id="select_meds/show_artemether_option-label">
+						<value>Debug: Artemether <output value="/data/select_meds/all_artemether_option"/></value>
+					</text>
+					<text id="select_meds/show_vitamine_a-label">
+						<value>Debug: Vitamine A <output value="/data/select_meds/all_vitamine_a"/></value>
+					</text>
+					<text id="select_meds/vitamine_a-label">
+						<value>Choisissez la forme de Vitamine A</value>
+					</text>
+					<text id="select_meds/show_vitamine_a_option-label">
+						<value>Debug: Vitamine A <output value="/data/select_meds/all_vitamine_a_option"/></value>
+					</text>
+					<text id="select_meds/show_antibio-label">
+						<value>Debug: Antibio IDs: <output value="/data/select_meds/all_antibio"/></value>
+					</text>
+					<text id="select_meds/antibio-label">
+						<value>Choisissez un antibiotique</value>
+					</text>
+					<text id="select_meds/show_antibio_option-label">
+						<value>Debug: Antibio IDs: <output value="/data/select_meds/all_antibio_option"/></value>
+					</text>
+					<text id="select_meds/show_classless-label">
+						<value>Debug: classless Meds: <output value="/data/select_meds/all_classless_meds"/></value>
+					</text>
+					<text id="select_meds/question2-label">
+						<value>Debug: Meds not needing recon: <output value="/data/select_meds/list_of_meds_not_needing_selection"/></value>
+					</text>
+					<text id="select_meds/show_all_meds-label">
+						<value>Debug: All meds: <output value="/data/select_meds/all_chosen_med_ids"/></value>
+					</text>
+					<text id="child_dosage_calculation-label">
+						<value>child_dosage_calculation</value>
+					</text>
+					<text id="child_dosage_calculation/iterate_over_diagnoses_child/item-label">
+						<value>Treatment group: <output value="instance('products')/products/product[@id=current()/@id]/product_data/treatment_plan"/></value>
+					</text>
+					<text id="label_prescription_ready-label">
+						<value># La prescription des m&#233;dicaments est pr&#234;te</value>
+						<value form="markdown"># La prescription des m&#233;dicaments est pr&#234;te</value>
+					</text>
+					<text id="meds-label">
+						<value>meds</value>
+					</text>
+				</translation>
+			</itext>
+		<bind calculate="/data/meta/timeEnd" nodeset="/data/case_case_child/case/@date_modified" type="xsd:dateTime"/><bind calculate="/data/meta/userID" nodeset="/data/case_case_child/case/@user_id"/><bind calculate="instance('commcaresession')/session/data/case_id" nodeset="/data/case_case_child/case/@case_id"/><bind calculate="/data/meds_selection" nodeset="/data/case_case_child/case/update/meds_selection" relevant="count(/data/meds_selection) &gt; 0"/><setvalue event="xforms-ready" ref="/data/visit_type_loaded" value="instance('casedb')/casedb/case[@case_id=instance('commcaresession')/session/data/case_id_case_visit]/visit_type"/><setvalue event="xforms-ready" ref="/data/vitamin_a_loaded" value="instance('casedb')/casedb/case[@case_id=instance('commcaresession')/session/data/case_id_case_visit]/vitamin_a"/><setvalue event="xforms-ready" ref="/data/weight_loaded" value="instance('casedb')/casedb/case[@case_id=instance('commcaresession')/session/data/case_id_case_visit]/weight"/><bind calculate="/data/meta/timeEnd" nodeset="/data/case_case_visit/case/@date_modified" type="xsd:dateTime"/><bind calculate="/data/meta/userID" nodeset="/data/case_case_visit/case/@user_id"/><bind calculate="instance('commcaresession')/session/data/case_id_case_visit" nodeset="/data/case_case_visit/case/@case_id"/><bind calculate="/data/meds_selection" nodeset="/data/case_case_visit/case/update/meds_selection" relevant="count(/data/meds_selection) &gt; 0"/><setvalue event="xforms-ready" ref="/data/meta/deviceID" value="instance('commcaresession')/session/context/deviceid"/><setvalue event="xforms-ready" ref="/data/meta/timeStart" value="now()"/><bind nodeset="/data/meta/timeStart" type="xsd:dateTime"/><setvalue event="xforms-revalidate" ref="/data/meta/timeEnd" value="now()"/><bind nodeset="/data/meta/timeEnd" type="xsd:dateTime"/><setvalue event="xforms-ready" ref="/data/meta/username" value="instance('commcaresession')/session/context/username"/><setvalue event="xforms-ready" ref="/data/meta/userID" value="instance('commcaresession')/session/context/userid"/><setvalue event="xforms-ready" ref="/data/meta/instanceID" value="uuid()"/><setvalue event="xforms-ready" ref="/data/meta/appVersion" value="instance('commcaresession')/session/context/appversion"/></model>
+	</h:head>
+	<h:body>
+		<trigger ref="/data/Debug_label" appearance="minimal">
+			<label ref="jr:itext('Debug_label-label')"/>
+		</trigger>
+		<group ref="/data/possible_meds" appearance="field-list">
+			<label ref="jr:itext('possible_meds-label')"/>
+			<group>
+				<label ref="jr:itext('possible_meds/look_for_treatment_of_same_class/item-label')"/>
+				<repeat jr:count="/data/possible_meds/look_for_treatment_of_same_class/@count" jr:noAddRemove="true()" nodeset="/data/possible_meds/look_for_treatment_of_same_class/item">
+					<trigger ref="/data/possible_meds/look_for_treatment_of_same_class/item/debug_all_meds" appearance="minimal">
+						<label ref="jr:itext('possible_meds/look_for_treatment_of_same_class/item/debug_all_meds-label')"/>
+					</trigger>
+				</repeat>
+			</group>
+		</group>
+		<group ref="/data/select_meds" appearance="field-list">
+			<label ref="jr:itext('select_meds-label')"/>
+			<trigger ref="/data/select_meds/show_perfusion_p1_a" appearance="minimal">
+				<label ref="jr:itext('select_meds/show_perfusion_p1_a-label')"/>
+			</trigger>
+			<select1 ref="/data/select_meds/perfusion_p1_a">
+				<label ref="jr:itext('select_meds/perfusion_p1_a-label')"/>
+				<itemset nodeset="instance('products')/products/product[selected(/data/select_meds/all_perfusion_p1_a, @id)]">
+					<label ref="description"/>
+					<value ref="@id"/>
+				</itemset>
+			</select1>
+			<trigger ref="/data/select_meds/show_perfusion_p1_b" appearance="minimal">
+				<label ref="jr:itext('select_meds/show_perfusion_p1_b-label')"/>
+			</trigger>
+			<select1 ref="/data/select_meds/perfusion_p1_b">
+				<label ref="jr:itext('select_meds/perfusion_p1_a-label')"/>
+				<itemset nodeset="instance('products')/products/product[selected(/data/select_meds/all_perfusion_p1_b, @id)]">
+					<label ref="description"/>
+					<value ref="@id"/>
+				</itemset>
+			</select1>
+			<trigger ref="/data/select_meds/show_perfusion_p2_a" appearance="minimal">
+				<label ref="jr:itext('select_meds/show_perfusion_p2_a-label')"/>
+			</trigger>
+			<select1 ref="/data/select_meds/perfusion_p2_a">
+				<label ref="jr:itext('select_meds/perfusion_p1_a-label')"/>
+				<itemset nodeset="instance('products')/products/product[selected(/data/select_meds/all_perfusion_p2_a, @id)]">
+					<label ref="description"/>
+					<value ref="@id"/>
+				</itemset>
+			</select1>
+			<trigger ref="/data/select_meds/show_perfusion_p2_b" appearance="minimal">
+				<label ref="jr:itext('select_meds/show_perfusion_p2_b-label')"/>
+			</trigger>
+			<select1 ref="/data/select_meds/perfusion_p2_b">
+				<label ref="jr:itext('select_meds/perfusion_p1_a-label')"/>
+				<itemset nodeset="instance('products')/products/product[selected(/data/select_meds/all_perfusion_p2_b, @id)]">
+					<label ref="description"/>
+					<value ref="@id"/>
+				</itemset>
+			</select1>
+			<trigger ref="/data/select_meds/show_deparasitage" appearance="minimal">
+				<label ref="jr:itext('select_meds/show_deparasitage-label')"/>
+			</trigger>
+			<select1 ref="/data/select_meds/deparasitage">
+				<label ref="jr:itext('select_meds/deparasitage-label')"/>
+				<itemset nodeset="instance('products')/products/product[selected(/data/select_meds/all_deparasitage, @id)]">
+					<label ref="description"/>
+					<value ref="@id"/>
+				</itemset>
+			</select1>
+			<trigger ref="/data/select_meds/show_deparasitage_option" appearance="minimal">
+				<label ref="jr:itext('select_meds/show_deparasitage_option-label')"/>
+			</trigger>
+			<select1 ref="/data/select_meds/deparasitage_option">
+				<label ref="jr:itext('select_meds/deparasitage-label')"/>
+				<itemset nodeset="instance('products')/products/product[selected(/data/select_meds/all_deparasitage_option, @id)]">
+					<label ref="description"/>
+					<value ref="@id"/>
+				</itemset>
+			</select1>
+			<trigger ref="/data/select_meds/show_artemether" appearance="minimal">
+				<label ref="jr:itext('select_meds/show_artemether-label')"/>
+			</trigger>
+			<select1 ref="/data/select_meds/artemether">
+				<label ref="jr:itext('select_meds/artemether-label')"/>
+				<itemset nodeset="instance('products')/products/product[selected(/data/select_meds/all_artemether, @id)]">
+					<label ref="description"/>
+					<value ref="@id"/>
+				</itemset>
+			</select1>
+			<trigger ref="/data/select_meds/show_artemether_option" appearance="minimal">
+				<label ref="jr:itext('select_meds/show_artemether_option-label')"/>
+			</trigger>
+			<select1 ref="/data/select_meds/artemether_option">
+				<label ref="jr:itext('select_meds/artemether-label')"/>
+				<itemset nodeset="instance('products')/products/product[selected(/data/select_meds/all_artemether_option, @id)]">
+					<label ref="description"/>
+					<value ref="@id"/>
+				</itemset>
+			</select1>
+			<trigger ref="/data/select_meds/show_vitamine_a" appearance="minimal">
+				<label ref="jr:itext('select_meds/show_vitamine_a-label')"/>
+			</trigger>
+			<select1 ref="/data/select_meds/vitamine_a">
+				<label ref="jr:itext('select_meds/vitamine_a-label')"/>
+				<itemset nodeset="instance('products')/products/product[selected(/data/select_meds/all_vitamine_a, @id)]">
+					<label ref="description"/>
+					<value ref="@id"/>
+				</itemset>
+			</select1>
+			<trigger ref="/data/select_meds/show_vitamine_a_option" appearance="minimal">
+				<label ref="jr:itext('select_meds/show_vitamine_a_option-label')"/>
+			</trigger>
+			<select1 ref="/data/select_meds/vitamine_a_option">
+				<label ref="jr:itext('select_meds/vitamine_a-label')"/>
+				<itemset nodeset="instance('products')/products/product[selected(/data/select_meds/all_vitamine_a_option, @id)]">
+					<label ref="description"/>
+					<value ref="@id"/>
+				</itemset>
+			</select1>
+			<trigger ref="/data/select_meds/show_antibio" appearance="minimal">
+				<label ref="jr:itext('select_meds/show_antibio-label')"/>
+			</trigger>
+			<select1 ref="/data/select_meds/antibio">
+				<label ref="jr:itext('select_meds/antibio-label')"/>
+				<itemset nodeset="instance('products')/products/product[selected(/data/select_meds/all_antibio, @id)]">
+					<label ref="description"/>
+					<value ref="@id"/>
+				</itemset>
+			</select1>
+			<trigger ref="/data/select_meds/show_antibio_option" appearance="minimal">
+				<label ref="jr:itext('select_meds/show_antibio_option-label')"/>
+			</trigger>
+			<select1 ref="/data/select_meds/antibio_option">
+				<label ref="jr:itext('select_meds/antibio-label')"/>
+				<itemset nodeset="instance('products')/products/product[selected(/data/select_meds/all_antibio_option, @id)]">
+					<label ref="description"/>
+					<value ref="@id"/>
+				</itemset>
+			</select1>
+			<trigger ref="/data/select_meds/show_classless" appearance="minimal">
+				<label ref="jr:itext('select_meds/show_classless-label')"/>
+			</trigger>
+			<trigger ref="/data/select_meds/question2" appearance="minimal">
+				<label ref="jr:itext('select_meds/question2-label')"/>
+			</trigger>
+			<trigger ref="/data/select_meds/show_all_meds" appearance="minimal">
+				<label ref="jr:itext('select_meds/show_all_meds-label')"/>
+			</trigger>
+		</group>
+		<group ref="/data/child_dosage_calculation" appearance="field-list">
+			<label ref="jr:itext('child_dosage_calculation-label')"/>
+			<group>
+				<label ref="jr:itext('child_dosage_calculation/iterate_over_diagnoses_child/item-label')"/>
+				<repeat jr:count="/data/child_dosage_calculation/iterate_over_diagnoses_child/@count" jr:noAddRemove="true()" nodeset="/data/child_dosage_calculation/iterate_over_diagnoses_child/item"/>
+			</group>
+		</group>
+		<trigger ref="/data/label_prescription_ready" appearance="minimal">
+			<label ref="jr:itext('label_prescription_ready-label')"/>
+		</trigger>
+		<group ref="/data/meds">
+			<label ref="jr:itext('meds-label')"/>
+		</group>
+	</h:body>
+</h:html>
