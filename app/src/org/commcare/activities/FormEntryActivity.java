@@ -693,6 +693,10 @@ public class FormEntryActivity extends SaveSessionCommCareActivity<FormEntryActi
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
+        if (CommCareApplication._().isConsumerApp()) {
+            return super.onPrepareOptionsMenu(menu);
+        }
+
         GoogleAnalyticsUtils.reportOptionsMenuEntry(GoogleAnalyticsFields.CATEGORY_FORM_ENTRY);
 
         menu.removeItem(MENU_LANGUAGES);
