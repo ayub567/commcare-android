@@ -269,7 +269,7 @@ public class AndroidSessionWrapper {
 
         // Ok, now we just need to figure out if it's time to go home, or time
         // to fire up a new session from the stack
-        if (session.finishExecuteAndPop(getEvaluationContext())) {
+        if (session.finishExecuteAndPop(getIIF())) {
             //We just built a new session stack into the session, so we want to keep that,
             //clear out the internal state vars, though.
             cleanVolatiles();
@@ -286,7 +286,7 @@ public class AndroidSessionWrapper {
      * always require a fresh jump to the central controller.
      */
     public void executeStackActions(Vector<StackOperation> ops) {
-        session.executeStackOperations(ops, getEvaluationContext());
+        session.executeStackOperations(ops, getIIF());
 
         //regardless of whether we just updated the current stack, we need to
         //assume our current volatile states are no longer relevant
