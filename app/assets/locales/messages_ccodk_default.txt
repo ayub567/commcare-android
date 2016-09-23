@@ -428,6 +428,12 @@ analytics.opt.out.title=Opt out of Google Analytics?
 analytics.opt.out.message=This application uses Google Analytics to anonymously track usage data within the application. If you do not want your usage data to be tracked, you can disable it at any time.
 analytics.disable.button=DISABLE
 
+enable.update.to.unstarred.text=Enable Updating to Un-Starred Builds
+disable.update.to.unstarred.text=Disable Updating to Un-Starred Builds
+enable.update.to.unstarred.warning.title=WARNING: For Testing Only
+enable.update.to.unstarred.warning.message=Selecting ENABLE will allow app updates to use whatever the latest build on HQ is, even if it is unstarred. This setting is meant for testing purposes, and should not be turned on for live app users.
+update.to.unstarred.confirm.button=ENABLE
+
 remember.password.for.next.login=Remember PW For Next Login
 remember.password.confirm.title=Log out and Remember Password?
 remember.password.confirm.message=This action will log you out and allow the next login to be completed without any authentication required. Upon next login, the user will then be required to create a PIN. Do you wish to proceed?

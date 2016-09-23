@@ -128,7 +128,7 @@ public class CommCarePreferences
         prefKeyToAnalyticsEvent.put(AUTO_UPDATE_FREQUENCY, GoogleAnalyticsFields.LABEL_AUTO_UPDATE);
         prefKeyToAnalyticsEvent.put(PREFS_FUZZY_SEARCH_KEY, GoogleAnalyticsFields.LABEL_FUZZY_SEARCH);
         prefKeyToAnalyticsEvent.put(GRID_MENUS_ENABLED, GoogleAnalyticsFields.LABEL_GRID_MENUS);
-        prefKeyToAnalyticsEvent.put(NEWEST_APP_VERSION_ENABLED, GoogleAnalyticsFields.LABEL_NEWEST_APP_VERSION);
+        //prefKeyToAnalyticsEvent.put(NEWEST_APP_VERSION_ENABLED, GoogleAnalyticsFields.LABEL_NEWEST_APP_VERSION);
     }
 
     @Override
@@ -183,6 +183,13 @@ public class CommCarePreferences
     }
 
     private void setupButtons() {
+        setupServerSettingsButton();
+        setupDeveloperSettingsButton();
+        setupDisableAnalyticsButton();
+        setupUpdateToNewestAppVersionButton();
+    }
+
+    private void setupServerSettingsButton() {
         Preference serverSettingsButton = findPreference(SERVER_SETTINGS);
         serverSettingsButton.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
@@ -191,7 +198,9 @@ public class CommCarePreferences
                 return true;
             }
         });
+    }
 
+    private void setupDeveloperSettingsButton() {
         Preference developerSettingsButton = findPreference(DEVELOPER_SETTINGS);
         if (DeveloperPreferences.isSuperuserEnabled()) {
             developerSettingsButton.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
@@ -207,7 +216,9 @@ public class CommCarePreferences
         } else {
             getPreferenceScreen().removePreference(developerSettingsButton);
         }
+    }
 
+    private void setupDisableAnalyticsButton() {
         Preference analyticsButton = findPreference(DISABLE_ANALYTICS);
         if (CommCarePreferences.isAnalyticsEnabled()) {
             analyticsButton.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
@@ -234,6 +245,59 @@ public class CommCarePreferences
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                         CommCarePreferences.disableAnalytics();
+                    }
+                });
+
+        f.setNegativeButton(Localization.get("option.cancel"),
+                new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+        f.showNonPersistentDialog();
+    }
+
+    private void setupUpdateToNewestAppVersionButton() {
+        final Preference updateToNewestAppVersionPref = findPreference(NEWEST_APP_VERSION_ENABLED);
+        if (isNewestAppVersionEnabled()) {
+            updateToNewestAppVersionPref.setTitle(Localization.get("disable.update.to.unstarred.text"));
+            updateToNewestAppVersionPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    editNewestAppVersionSetting(CommCarePreferences.NO);
+                    updateToNewestAppVersionPref.setTitle(Localization.get("enable.update.to.unstarred.text"));
+                    return true;
+                }
+            });
+        } else {
+            updateToNewestAppVersionPref.setTitle(Localization.get("enable.update.to.unstarred.text"));
+            updateToNewestAppVersionPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    showEnableUnstarredBuildsWarning(updateToNewestAppVersionPref);
+                    return true;
+                }
+            });
+        }
+    }
+
+    private void showEnableUnstarredBuildsWarning(final Preference updateToNewestAppVersionPref) {
+        StandardAlertDialog f = new StandardAlertDialog(this,
+                Localization.get("enable.update.to.unstarred.warning.title"),
+                Localization.get("enable.update.to.unstarred.warning.message"));
+
+        f.setPositiveButton(Localization.get("update.to.unstarred.confirm.button"),
+                new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        editNewestAppVersionSetting(CommCarePreferences.YES);
+                        updateToNewestAppVersionPref.setTitle(Localization.get("disable.update.to.unstarred.text"));
                     }
                 });
 
@@ -517,10 +581,10 @@ public class CommCarePreferences
         return properties.getString(NEWEST_APP_VERSION_ENABLED, CommCarePreferences.NO).equals(CommCarePreferences.YES);
     }
 
-    public static void enableNewestAppVersion() {
+    public static void editNewestAppVersionSetting(String setting) {
         CommCareApplication._().getCurrentApp().getAppPreferences()
                 .edit()
-                .putString(NEWEST_APP_VERSION_ENABLED, CommCarePreferences.YES)
+                .putString(NEWEST_APP_VERSION_ENABLED, setting)
                 .apply();
     }
 }
